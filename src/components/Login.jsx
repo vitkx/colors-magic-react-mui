@@ -12,7 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import users from "./../../data/users";
+import users from "./../data/users";
 import image from "./Images/image.jpg";
 import authService from "./../service/authService";
 
@@ -43,71 +43,64 @@ const useStyles = makeStyles((theme) => ({
 
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   size: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   paper: {
     margin: theme.spacing(2, 6),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(0),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 export default function SignInSide(props) {
-
-  if(authService.isLoggedIn()){
-
+  if (authService.isLoggedIn()) {
     props.history.push("./home");
-
   }
 
   const classes = useStyles();
 
   console.log(typeof classes.root);
 
-  const [account, setAccount] = React.useState({username:"",password:""});
+  const [account, setAccount] = React.useState({ username: "", password: "" });
 
-  const handelAccount = (property,event)=>{
-
-    const accountCopy = {...account};
+  const handelAccount = (property, event) => {
+    const accountCopy = { ...account };
     accountCopy[property] = event.target.value;
 
     setAccount(accountCopy);
-
-  }
-
-  const isVarifiedUser=(username, password)=>{
-
-    return users.find((user)=> user.username === username && user.password === password);
-
   };
 
+  const isVarifiedUser = (username, password) => {
+    return users.find(
+      (user) => user.username === username && user.password === password
+    );
+  };
 
-  const handelLogin = ()=>{
-      if(isVarifiedUser(account.username,account.password)){
-        authService.doLogIn(account.username);
-        setAccount({username:"",password:""});
-        props.history.push("/home");
-
-      }
+  const handelLogin = () => {
+    if (isVarifiedUser(account.username, account.password)) {
+      authService.doLogIn(account.username);
+      setAccount({ username: "", password: "" });
+      props.history.push("/home");
+    }
   };
 
   return (
@@ -133,7 +126,7 @@ export default function SignInSide(props) {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
-            onChange={(event)=>handelAccount("username",event)}
+              onChange={(event) => handelAccount("username", event)}
               variant="outlined"
               margin="normal"
               required
@@ -144,7 +137,7 @@ export default function SignInSide(props) {
               autoFocus
             />
             <TextField
-            onChange={(event)=>handelAccount("password",event)}
+              onChange={(event) => handelAccount("password", event)}
               variant="outlined"
               margin="normal"
               required
@@ -165,7 +158,7 @@ export default function SignInSide(props) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick = {handelLogin}
+              onClick={handelLogin}
             >
               Sign In
             </Button>
